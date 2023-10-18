@@ -1,0 +1,38 @@
+[
+  {
+    "document_Identity": "74378866",
+    "quantity": 3,
+    "total": 9717.0,
+    "product_id": 1
+  },
+  {
+    "document_Identity": "74378866",
+    "quantity": 1,
+    "total": 1799,
+    "product_id": 2
+  },
+  {
+    "document_Identity": "74378866",
+    "product_id": 5,
+    "quantity": 1,
+    "total": 809.0
+  },
+  {
+    "document_Identity": "3309549",
+    "product_id": 1,
+    "quantity": 1,
+    "total": 3239.0
+  },
+  {
+    "document_Identity": "3309549",
+    "product_id": 3,
+    "quantity": 9,
+    "total": 5.751
+  },
+  {
+    "document_Identity": "9459595",
+    "product_id": 2,
+    "quantity": 1,
+    "total": 1799
+  }
+]

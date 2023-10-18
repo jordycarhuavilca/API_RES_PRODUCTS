@@ -1,0 +1,33 @@
+version: "3.8"
+services:
+  app-2:
+    container_name: "express-container-2"
+    build: 
+      context: .
+      dockerfile: ./dockerFile
+    environment:
+      - NODE_OPTIONS=--max_old_space_size=8000
+    ports:
+      - 3004:3004
+    env_file:
+      - .env
+    networks:
+      - claro
+  mysql1:
+    container_name: DB_A
+    image: mysql:latest
+    ports:
+      - 3306:3011
+    environment:
+      MSQL_OPTS: --skip-host-cache
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - mysqldata1:/var/lib/mysql
+    networks:
+      - claro
+volumes:
+  mysqldata1:
+networks:
+  claro:

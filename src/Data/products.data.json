@@ -1,0 +1,37 @@
+[
+  {
+    "product_name": "Iphone 12",
+    "stock": 27,
+    "description": "El iPhone 12 cuenta con una pantalla Super Retina XDR de 6.1 pulgadas con un aspecto de 19.5:9. La pantalla OLED del iPhone 12 es catalogada por Apple como la mejor.",
+    "product_price": 3239.0,
+    "estado": "available"
+  },
+  {
+    "product_name": "AirPods Max",
+    "stock": 12,
+    "description": "Presentamos los AirPods Max, el equilibrio perfecto entre un sonido de alta fidelidad asombroso y la mágica facilidad de uso de los AirPods. Los auriculares definitivos ya están aquí.",
+    "product_price": 1799,
+    "estado": "available"
+  },
+  {
+    "product_name": "Samsung Galaxy A14 128GB 5G",
+    "stock": 90,
+    "description": "Conoce lo mejor del nuevo equipo celular Samsung Galaxy A14, Un dispositivo de diseño sencillo, pero completo en cuanto a características. Presenta una amplia capacidad de almacenamiento, como 128GB de memoria interna y apta hasta 1TB de memoria externa.",
+    "product_price": 639.0,
+    "estado": "available"
+  },
+  {
+    "product_name": "Samsung Galaxy S23 Ultra 512GB Negro",
+    "stock": 0,
+    "description": "Adquiere el nuevo modelo Samsung Galaxy S23 Ultra y experimenta el nuevo diseño y avance tecnológico de esta marca. Este celular inteligente cuenta con un elegante diseño y 4 cámaras posteriores para una mejor captura de imágenes. El S23 Ultra te asegura conectividad 5G y una batería de 5000 mAh con carga rápida de 45W de carga super rápida para que puedas contar con ello en todo momento. Compra el Samsung Galaxy S23 Ultra en nuestra tienda Claro a uno de los mejores precios del país. La duración de la batería depende de la configuración de la red y de muchos otros factores; los resultados reales pueden ser diferentes. La batería tiene ciclos de carga limitados y eventualmente necesitará ser reemplazada. La duración de la batería y el número de ciclos de carga varían según el uso y la configuración.",
+    "product_price": 5279.00,
+    "estado": "Sold out"
+  },
+  {
+    "product_name": "Honor X8A 128GB Plata Sideral + Minispeaker",
+    "stock": 0,
+    "description": "El Honor X8a en cuanto a diseño cuenta con una carcasa brillante con un acabado trasero escarchado. Sus marcos superiores y laterales casi ni se notan, dando así una mejor experiencia de visualización del contenido. En la parte trasera encontramos un módulo cuadrado que alberga sus tres cámaras principales y el flash. Tiene una pantalla de 6.7” con una resolución de 2388 x 1080 píxeles. Asimismo, este dispositivo inteligente cuenta con la opción de desbloqueo por reconocimiento facial y dactilar.",
+    "product_price": 809.00,
+    "estado": "Sold out"
+  }
+]
