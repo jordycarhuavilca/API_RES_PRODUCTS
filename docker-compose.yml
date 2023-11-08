@@ -1,23 +1,25 @@
 version: "3.8"
 services:
   app-2:
-    container_name: "express-container-2"
+    container_name: "SERVER_A"
     build: 
       context: .
       dockerfile: ./dockerFile
     environment:
       - NODE_OPTIONS=--max_old_space_size=8000
     ports:
-      - 3004:3004
+      - "${NODE_PORT}:${NODE_PORT_MAPPED}"
+    volumes:
+      - .:/usr/src/server_A
     env_file:
       - .env
     networks:
       - claro
   mysql1:
     container_name: DB_A
-    image: mysql:latest
+    image: mysql:8.1.0
     ports:
-      - 3306:3011
+      - "${MYSQL_PORT}:${MYSQL_PORT_MAPPED}"
     environment:
       MSQL_OPTS: --skip-host-cache
     restart: always

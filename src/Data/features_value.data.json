@@ -1,0 +1,293 @@
+[
+    {
+        "product_id" : 1,
+        "FeatureId" : 1,
+        "value" : "6"
+    },
+    {
+        "product_id" : 1,
+        "FeatureId" : 2,
+        "value" : "12 MP"
+    },
+    {
+        "product_id" : 1,
+        "FeatureId" : 3,
+        "value" : "AMD a6"
+    },
+    {
+        "product_id" : 1,
+        "FeatureId" : 4,
+        "value" : "64GB"
+    },
+    {
+        "product_id" : 1,
+        "FeatureId" : 5,
+        "value" : "NEGRO"
+    },
+    {
+        "product_id" : 1,
+        "FeatureId" : 6,
+        "value" : "3300"
+    },
+    {
+        "product_id" : 1,
+        "FeatureId" : 7,
+        "value" : "12 MP"
+    },
+    {
+        "product_id" : 1,
+        "FeatureId" : 8,
+        "value" : "Ios"
+    },
+    {
+        "product_id" : 1,
+        "FeatureId" : 9,
+        "value" : "2GB"
+    },
+    {
+        "product_id" : 1,
+        "FeatureId" : 10,
+        "value" : "No" 
+    },
+    {
+        "product_id" : 1,
+        "FeatureId" : 11,
+        "value" : "12 MESES DE GARANTIA"
+    },
+    {
+        "product_id" : 1,
+        "FeatureId" : 12,
+        "value" : "NUEVO"
+    },
+    {
+        "product_id" : 1,
+        "FeatureId" : 13,
+        "value" : "No aplica"
+    },
+    {
+        "product_id" : 2,
+        "FeatureId" : 15,
+        "value" : "Cancelación Activa de Ruido"
+    },
+    {
+        "product_id" : 2,
+        "FeatureId" : 16,
+        "value" : "Apple"
+    },
+    {
+        "product_id" : 2,
+        "FeatureId" : 17,
+        "value" : "MGYJ3AM/A"
+    },
+    {
+        "product_id" : 2,
+        "FeatureId" : 18,
+        "value" : "No aplica"
+    },
+    {
+        "product_id" : 2,
+        "FeatureId" : 19,
+        "value" : "No aplica"
+    },
+    {
+        "product_id" : 2,
+        "FeatureId" : 20,
+        "value" : "Sí"
+    },
+    {
+        "product_id" : 2,
+        "FeatureId" : 21,
+        "value" : "Sí"
+    },
+    {
+        "product_id" : 2,
+        "FeatureId" : 22,
+        "value" : "0.3848 kg"
+    },
+    {
+        "product_id" : 2,
+        "FeatureId" : 23,
+        "value" : "No aplica"
+    },
+    {
+        "product_id" : 2,
+        "FeatureId" : 24,
+        "value" : "No"
+    },
+    {
+        "product_id" : 2,
+        "FeatureId" : 25,
+        "value" : "Audífonos headset"
+    },
+    {
+        "product_id" : 2,
+        "FeatureId" : 26,
+        "value" : "No aplica"
+    },
+    {
+        "product_id" : 2,
+        "FeatureId" : 14,
+        "value" : "AirPods Max, Cable de Lightning a USB-C, Documentación"
+    },
+    {
+        "product_id" : 3,
+        "FeatureId" : 2,
+        "value" : "50 MP"
+    },
+    {
+        "product_id" : 3,
+        "FeatureId" : 4,
+        "value" : "64GB"
+    },
+    {
+        "product_id" : 3,
+        "FeatureId" : 5,
+        "value" : "Verde"
+    },
+    {
+        "product_id" : 3,
+        "FeatureId" : 6,
+        "value" : "5000"
+    },
+    {
+        "product_id" : 3,
+        "FeatureId" : 7,
+        "value" : "13 MP"
+    },
+    {
+        "product_id" : 3,
+        "FeatureId" : 8,
+        "value" : "Android"
+    },
+    {
+        "product_id" : 3,
+        "FeatureId" : 9,
+        "value" : "4GB"
+    },
+    {
+        "product_id" : 3,
+        "FeatureId" : 10,
+        "value" : "Sí" 
+    },
+    {
+        "product_id" : 3,
+        "FeatureId" : 11,
+        "value" : "12 MESES DE GARANTIA"
+    },
+    {
+        "product_id" : 3,
+        "FeatureId" : 12,
+        "value" : "NUEVO"
+    },
+    {
+        "product_id" : 3,
+        "FeatureId" : 13,
+        "value" : "256GB"
+    },
+    {
+        "product_id" : 3,
+        "FeatureId" : 14,
+        "value" : "Equipo + Cargador + Cable + Extractor de SIM + Manuales + Certificado de Garantía"
+    },
+    {
+        "product_id" : 4,
+        "FeatureId" : 1,
+        "value" : "6.8 pulgadas"
+    },
+    {
+        "product_id" : 4,
+        "FeatureId" : 4,
+        "value" : "512GB"
+    },
+    {
+        "product_id" : 4,
+        "FeatureId" : 5,
+        "value" : "NEGRO"
+    },
+    {
+        "product_id" : 4,
+        "FeatureId" : 6,
+        "value" : "5000 mAh"
+    },
+    {
+        "product_id" : 4,
+        "FeatureId" : 7,
+        "value" : "12 MP"
+    },
+    {
+        "product_id" : 4,
+        "FeatureId" : 8,
+        "value" : "Android"
+    },
+    {
+        "product_id" : 4,
+        "FeatureId" : 9,
+        "value" : "12GB"
+    },
+    {
+        "product_id" : 4,
+        "FeatureId" : 12,
+        "value" : "NUEVO"
+    },
+    {
+        "product_id" : 4,
+        "FeatureId" : 13,
+        "value" : "No aplica"
+    },
+    {
+        "product_id" : 4,
+        "FeatureId" : 16,
+        "value" : "SAMSUNG"
+    },
+    {
+        "product_id" : 4,
+        "FeatureId" : 17,
+        "value" : "SM-S918BLIVLTP"
+    },
+    {
+        "product_id" : 5,
+        "FeatureId" : 1,
+        "value" : "6.7 pulgadas"
+    },
+    {
+        "product_id" : 5,
+        "FeatureId" : 4,
+        "value" : "128GB"
+    },
+    {
+        "product_id" : 5,
+        "FeatureId" : 6,
+        "value" : "4500mAh"
+    },
+    {
+        "product_id" : 5,
+        "FeatureId" : 8,
+        "value" : "Android"
+    },
+    {
+        "product_id" : 5,
+        "FeatureId" : 9,
+        "value" : "8GB"
+    },
+    {
+        "product_id" : 5,
+        "FeatureId" : 12,
+        "value" : "NUEVO"
+    },
+    {
+        "product_id" : 5,
+        "FeatureId" : 14,
+        "value" : "cable USB tipo C, cargador, guía de inicio rápido,pin de expulsión, funda protectora, mica protectora, hoja de garantía"
+    },
+    {
+        "product_id" : 5,
+        "FeatureId" : 16,
+        "value" : "Honor"
+    },
+    {
+        "product_id" : 5,
+        "FeatureId" : 17,
+        "value" : "Honor X8a"
+    }
+
+]

@@ -1,59 +1,55 @@
-const { orders, products, users } = require("./db/models/index.models");
+const listModels = require("./db/associations");
 const path = require("path");
 const fs = require("fs").promises;
+const { getCurrentTime } = require("./utils/date.utils");
 
-async function getData(pathWay2) {
-  const res = await fs.readFile(pathWay2, "utf-8");
-  return res;
-}
-
-function pathWay(fileName) {
-  return path.join(__dirname, `./Data/${fileName}.data.json`);
-}
-
-const insertUser = async () => {
-  const dataString = await getData(pathWay("users"));
-  const data = JSON.parse(dataString);
-  users
-    .bulkCreate(data)
-    .then(() => {
-      console.log("inserted data to the table user");
-    })
-    .catch((err) => {
-      console.log("error inserting data to the table users " + err);
-    });
-};
-const insertProducts = async () => {
-  const dataString = await getData(pathWay("products"));
-  const data = JSON.parse(dataString);
-
-  products
-    .bulkCreate(data)
-    .then(() => {
-      console.log("inserted data to the table Products");
-    })
-    .catch((err) => {
-      console.log("error inserting data to the table Products " + err);
-    });
-};
-const inserstOrders = async () => {
-  const dataString = await getData(pathWay("orders"));
-  const data = JSON.parse(dataString);
-
-  orders
-    .bulkCreate(data)
-    .then(() => {
-      console.log("inserted data to the table orders");
-    })
-    .catch((err) => {
-      console.log("error inserting data to the table orders " + err);
-    });
+const getCurrentPath = (filename, extention) => {
+  return path.join(__dirname, `./data/${filename}.data.${extention}`);
 };
 
-async function insertData() {
-  await insertUser();
-  await insertProducts();
-  await inserstOrders();
-}
+const insertData = async (pathWay, model, nameModel) => {
+  try {
+    let dataString = await fs.readFile(pathWay, "utf-8");
+    if (nameModel == "orders") {
+      const list = JSON.parse(dataString);
+      list.forEach((data) => {
+        data.orderTime = getCurrentTime();
+      });
+      dataString = JSON.stringify(list);
+    }
+    model.bulkCreate(JSON.parse(dataString));
+    console.log(`${nameModel} inserted successfully`);
+  } catch (error) {
+    console.log(`error inserting data ${error}`);
+  }
+};
 
-module.exports = insertData;
+const insert = async () => {
+  const listNameData = [
+    "users",
+    "products",
+    "features",
+    "features_value",
+    "orders",
+    "orderDetail",
+  ];
+  let index = 0;
+  const { orders, products, users, Features, Features_values, orderDetail } =
+    listModels;
+
+  const orderModels = {
+    user: users,
+    products: products,
+    Features: Features,
+    Features_values: Features_values,
+    orders: orders,
+    orderDetail: orderDetail,
+  };
+
+  for (let key in orderModels) {
+    const pathWay = getCurrentPath(listNameData[index], "json");
+    await insertData(pathWay, orderModels[key], listNameData[index]);
+    index++;
+  }
+};
+module.exports = insert;

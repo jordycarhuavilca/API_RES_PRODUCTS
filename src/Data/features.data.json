@@ -1,0 +1,80 @@
+[
+    {
+        "feature_name": "Tamaño de la pantalla"
+    },
+    {
+        "feature_name":"Cámara posterior" 
+    },
+    {
+        "feature_name": "Procesador"
+    },
+    {
+        "feature_name": "Capacidad de almacenamiento"
+    },
+    {
+        "feature_name": "Color"
+    },
+    {
+        "feature_name": "Capacidad de la batería (en mAh)"
+    },
+    {
+        "feature_name": "Cámara frontal"
+    },
+    {
+        "feature_name": "Sistema operativo"
+    },
+    {
+        "feature_name": "Memoria RAM"
+    },
+    {
+        "feature_name":"Incluye cargador"
+    },
+    {
+        "feature_name":"Detalle de la garantía"
+    },
+    {
+        "feature_name":"Condicion del producto"
+    },
+    {
+        "feature_name":"Memoria expandible"
+    },
+    {
+        "feature_name":"Incluye"
+    },
+    {
+        "feature_name":"Aislador de sonido"
+    },
+    {
+        "feature_name":"Marca"
+    },
+    {
+        "feature_name":"Modelo"
+    },
+    {
+        "feature_name":"Auricular"
+    },
+    {
+        "feature_name":"largo del cable"
+    },
+    {
+        "feature_name":"Incluye micrófono"
+    },
+    {
+        "feature_name":"Conexión bluetooth"
+    },
+    {
+        "feature_name":"Peso"
+    },
+    {
+        "feature_name":"Potencia"
+    },
+    {
+        "feature_name":"Resistente al agua"
+    },
+    {
+        "feature_name":"Tipo"
+    },
+    {
+        "feature_name":"Frecuencia"
+    }
+]
