@@ -20,6 +20,20 @@ const addOrder = async (req, res) => {
     return res.status(serverError.statusCode).json({ message: err });
   }
 };
+const getOrdersDetail = async (req,res)=>{
+  res.header('Content-Type', 'application/json');
+  res.header('Access-Control-Allow-Origin', 'http://localhost:3008');
+  try {
+    const response = await product_service.getOrdersDetail(
+      req.params.numOrder
+    );
+    return res
+      .status(response.statusCode)
+      .send({ message: response.message, data: response.data });
+  } catch (err) {
+    return res.status(serverError.statusCode).json({ message: err });
+  }
+}
 const getMyPurchases = async (req, res) => {
   try {
     const idcliente = req.params.idCliente;
@@ -35,4 +49,5 @@ const getMyPurchases = async (req, res) => {
 module.exports = {
   addOrder,
   getMyPurchases,
+  getOrdersDetail
 };

@@ -15,6 +15,7 @@ services:
       - .env
     networks:
       - claro
+      - claro_shared_network
   mysql1:
     container_name: DB_A
     image: mysql:8.1.0
@@ -33,3 +34,5 @@ volumes:
   mysqldata1:
 networks:
   claro:
+  claro_shared_network:
+    external : true

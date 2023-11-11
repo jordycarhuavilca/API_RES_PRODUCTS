@@ -11,5 +11,7 @@ const Features_values = sequelize.define("Features_value", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+},{
+  timestamps: false,
 });
 module.exports = { Features_values };

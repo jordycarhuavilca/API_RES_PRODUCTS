@@ -16,7 +16,7 @@ async function connect() {
   try{
     await sequelize.authenticate();
     console.log("Connection opened successfully.");
-    await sequelize.sync({ alter : true });
+    await sequelize.sync({ force : true });
     console.log("All models were synchronized successfully.");
     await insertData();
     RunApp();

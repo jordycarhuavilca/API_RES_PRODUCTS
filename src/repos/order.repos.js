@@ -1,6 +1,7 @@
 const { orderDetail } = require("../db/models/orderDetail.models");
 const { products } = require("../db/models/products.models");
-const { orders } = require("../db/models/orderDetail.models");
+const { Features_values } = require("../db/models/features_value.models");
+const { Features } = require("../db/models/features.models");
 
 class orderRespos {
   constructor(order) {
@@ -15,6 +16,26 @@ class orderRespos {
   }
   async addOrderDetail(listProducts, trans) {
     return await orderDetail.bulkCreate(listProducts,{transaction : trans});
+  }
+  async getOrdersDetail(numOrder){
+    return await orderDetail.findAll({
+      where:{
+        numOrder : numOrder 
+      },
+      attributes : { exclude : ["orderDetailId","product_id","numOrder"]},
+      include: {
+        model : products,
+        attributes : { exclude : ["stock","estado"]},
+        include : {
+          model : Features_values,
+          attributes : { exclude : ["Feature_valueId","product_id","FeatureId"]},
+          include  :{
+            model : Features,
+            attributes : { exclude : ["FeatureId"]},
+          }
+        }
+      }
+    })
   }
   async getMyPurchases(idcliente) {
     return await this.order.findAll({

@@ -1,7 +1,8 @@
 const constant = require("../utils/constant");
 const sequelize = require("../db/Connection");
 const { getCurrentTime } = require("../utils/date.utils");
-
+const {parse, stringify} = require('flatted');
+const axios = require("axios");
 const setOrder = (document_Identity) => {
   return {
     document_Identity: document_Identity,
@@ -9,7 +10,7 @@ const setOrder = (document_Identity) => {
   };
 };
 
-const addOrderId = (listProducts, nextOrderid) => {
+const addNumOrder = (listProducts, nextOrderid) => {
   for (let i = 0; i < listProducts.length; i++) {
     listProducts[i].numOrder = nextOrderid;
   }
@@ -24,7 +25,27 @@ class orderService {
     if (Array.isArray(listProducts) && listProducts.length > 0) {
       const nextOrderid = await this.order.getNextOrderId();
 
-      const list = addOrderId(listProducts, nextOrderid);
+      const list = addNumOrder(listProducts, nextOrderid);
+
+      try {
+        const body = {
+          list: list,
+          dni: document_Identity,
+          numOrder: nextOrderid,
+        };
+        const response = await axios.post(
+          "http://SERVER_B:3008/reports/add",
+          body
+        );
+        console.log("response " +  stringify(response));
+
+        if (!response) {
+          constant.success.data = {};
+          return constant.reqValidationError;
+        }
+      } catch (error) {
+        console.log("error " + error);
+      }
 
       const res = await sequelize.transaction(async (t) => {
         const order = await this.order.addOrder(setOrder(document_Identity), t);
@@ -36,8 +57,17 @@ class orderService {
       constant.success.data = res;
       return constant.success;
     }
-    constant.reqValidationError.data = {}
+    constant.reqValidationError.data = {};
     return constant.reqValidationError;
+  }
+  async getOrdersDetail(numOrder) {
+    const data = await this.order.getOrdersDetail(numOrder);
+    if (!data) {
+      constant.recordNotFound.data = {};
+      return constant.recordNotFound;
+    }
+    constant.success.data = data;
+    return constant.success;
   }
   async getMyPurchases(idcliente) {
     const myPurchase = await this.order.getMyPurchases(idcliente);
