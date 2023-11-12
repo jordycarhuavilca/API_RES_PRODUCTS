@@ -1,7 +1,7 @@
 const constant = require("../utils/constant");
 const sequelize = require("../db/Connection");
 const { getCurrentTime } = require("../utils/date.utils");
-const {parse, stringify} = require('flatted');
+const { stringify } = require("flatted");
 const axios = require("axios");
 const setOrder = (document_Identity) => {
   return {
@@ -17,6 +17,24 @@ const addNumOrder = (listProducts, nextOrderid) => {
   return listProducts;
 };
 
+const getTotal = (price, quantity) => {
+  console.log("price " + price);
+  console.log("quantity " + quantity);
+  return price * quantity;
+};
+const adjustList = (list) => {
+  const newList = [];
+  for (let i = 0; i < list.length; i++) {
+    newList.push({
+      numOrder: list[i].numOrder,
+      quantity: list[i].quantity,
+      total: getTotal(list[i].price, list[i].quantity),
+      product_id: list[i].product_id,
+    });
+  }
+  return newList;
+};
+
 class orderService {
   constructor(order) {
     this.order = order;
@@ -25,34 +43,28 @@ class orderService {
     if (Array.isArray(listProducts) && listProducts.length > 0) {
       const nextOrderid = await this.order.getNextOrderId();
 
-      const list = addNumOrder(listProducts, nextOrderid);
+      let list = addNumOrder(listProducts, nextOrderid);
+
+      console.log("list " + JSON.stringify(list))
+      const res = await sequelize.transaction(async (t) => {
+        const order = await this.order.addOrder(setOrder(document_Identity), t);
+        list = adjustList(list);
+        const orderDetail = await this.order.addOrderDetail(list, t);
+        order.orderDetail = orderDetail;
+        return order;
+      });
 
       try {
         const body = {
           list: list,
           dni: document_Identity,
-          numOrder: nextOrderid,
         };
-        const response = await axios.post(
-          "http://SERVER_B:3008/reports/add",
-          body
-        );
-        console.log("response " +  stringify(response));
-
-        if (!response) {
-          constant.success.data = {};
-          return constant.reqValidationError;
-        }
+        await axios.post("http://SERVER_B:3008/reports/add", body);
       } catch (error) {
         console.log("error " + error);
+        constant.success.data = {};
+        return constant.reqValidationError;
       }
-
-      const res = await sequelize.transaction(async (t) => {
-        const order = await this.order.addOrder(setOrder(document_Identity), t);
-        const orderDetail = await this.order.addOrderDetail(list, t);
-        order.orderDetail = orderDetail;
-        return order;
-      });
 
       constant.success.data = res;
       return constant.success;

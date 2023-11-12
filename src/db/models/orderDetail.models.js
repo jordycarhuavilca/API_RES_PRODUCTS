@@ -12,7 +12,7 @@ const orderDetail = sequelize.define(
     quantity: {
       type: DataTypes.INTEGER,
     },
-    price: {
+    total: {
       type: DataTypes.DECIMAL,
     },
   },

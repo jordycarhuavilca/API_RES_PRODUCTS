@@ -2,38 +2,38 @@
     {
         "numOrder": 1,
         "quantity": 3,
-        "price": 9717.0,
+        "total": 9717.0,
         "product_id": 1
     },
     {
       "numOrder": 2,
       "quantity": 1,
-      "price": 1799,
+      "total": 1799,
       "product_id": 2
     },
     {
       "numOrder": 3,
       "product_id": 5,
       "quantity": 1,
-      "price": 809.0
+      "total": 809.0
     },
     {
       "numOrder": 4,
       "product_id": 1,
       "quantity": 1,
-      "price": 3239.0
+      "total": 3239.0
     },
     {
       "numOrder": 5,
       "product_id": 3,
       "quantity": 9,
-      "price": 5751
+      "total": 5751
     },
     {
       "numOrder": 5,
       "product_id": 2,
       "quantity": 1,
-      "price": 1799
+      "total": 1799
     }
   ]
   
