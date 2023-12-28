@@ -11,9 +11,11 @@ const orderDetail = sequelize.define(
     },
     quantity: {
       type: DataTypes.INTEGER,
+      allowNull : false
     },
     total: {
       type: DataTypes.DECIMAL,
+      allowNull : false
     },
   },
   {

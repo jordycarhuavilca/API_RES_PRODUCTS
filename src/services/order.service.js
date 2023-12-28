@@ -1,8 +1,10 @@
 const constant = require("../utils/constant");
 const sequelize = require("../db/Connection");
 const { getCurrentTime } = require("../utils/date.utils");
-const { stringify } = require("flatted");
 const axios = require("axios");
+const errorHandler = require('../utils/errorHandler')
+
+
 const setOrder = (document_Identity) => {
   return {
     document_Identity: document_Identity,
@@ -18,10 +20,10 @@ const addNumOrder = (listProducts, nextOrderid) => {
 };
 
 const getTotal = (price, quantity) => {
-  console.log("price " + price);
-  console.log("quantity " + quantity);
+  
   return price * quantity;
 };
+
 const adjustList = (list) => {
   const newList = [];
   for (let i = 0; i < list.length; i++) {
@@ -35,43 +37,56 @@ const adjustList = (list) => {
   return newList;
 };
 
+async function addReport(list,document_Identity){
+  const body = {
+    list: list,
+    dni: document_Identity,
+  };
+  await axios.post("http://SERVER_B:3008/reports/add", body)
+  .catch((err)=>{
+    if (err) {
+      const {message,statusCode} = constant.serverError
+      throw new errorHandler.InternalServerError(message,statusCode)
+    }
+  });
+}
+
 class orderService {
   constructor(order) {
     this.order = order;
   }
   async addOrder(listProducts, document_Identity) {
-    if (Array.isArray(listProducts) && listProducts.length > 0) {
       const nextOrderid = await this.order.getNextOrderId();
 
       let list = addNumOrder(listProducts, nextOrderid);
 
-      console.log("list " + JSON.stringify(list))
       const res = await sequelize.transaction(async (t) => {
-        const order = await this.order.addOrder(setOrder(document_Identity), t);
-        list = adjustList(list);
-        const orderDetail = await this.order.addOrderDetail(list, t);
-        order.orderDetail = orderDetail;
-        return order;
+        try {
+
+          const order = await this.order.addOrder(setOrder(document_Identity), t);
+          list = adjustList(list);
+          const orderDetail = await this.order.addOrderDetail(list, t);
+          order.orderDetail = orderDetail;
+          await addReport(listProducts,document_Identity)
+          return order;
+
+        } catch (error) {     
+
+          if (error.name === 'SequelizeUniqueConstraintError'
+           || error.name === 'SequelizeValidationError'
+           || error.name === 'SequelizeForeignKeyConstraintError'
+           ) {
+            const {message,statusCode} = constant.reqValidationError
+            throw new errorHandler.ValidateError(message,statusCode)
+          } 
+           
+          const {message,statusCode} = constant.serverError
+          throw new errorHandler.InternalServerError(message,statusCode)
+        }
       });
-
-      try {
-        const body = {
-          list: list,
-          dni: document_Identity,
-        };
-        await axios.post("http://SERVER_B:3008/reports/add", body);
-      } catch (error) {
-        console.log("error " + error);
-        constant.success.data = {};
-        return constant.reqValidationError;
-      }
-
-      constant.success.data = res;
-      return constant.success;
-    }
-    constant.reqValidationError.data = {};
-    return constant.reqValidationError;
+      return res;
   }
+
   async getOrdersDetail(numOrder) {
     const data = await this.order.getOrdersDetail(numOrder);
     if (!data) {
@@ -81,6 +96,7 @@ class orderService {
     constant.success.data = data;
     return constant.success;
   }
+
   async getMyPurchases(idcliente) {
     const myPurchase = await this.order.getMyPurchases(idcliente);
     if (!myPurchase) {

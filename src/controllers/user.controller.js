@@ -11,7 +11,6 @@ const getUser =async (req, res) => {
   const numDocument = req.params.nrodocument;
   try {
     const response =await userServ.getUser(numDocument);
-    console.log("statusCode " + response.statusCode)
     return res
       .status(response.statusCode)
       .json({ message: response.message, data: response.data });
@@ -23,7 +22,6 @@ const getUser =async (req, res) => {
 const listarUsers = async (req, res) => {
   try {
     const response = await userServ.listarUsers();
-    console.log("statusCode " + response.statusCode)
     return res
       .status(response.statusCode)
       .json({ message: response.message, data: response.data });
@@ -36,7 +34,6 @@ const addUser = async (req, res) => {
   const data = req.body;
   try {
     const response = await userServ.addUser(data);
-    console.log("statusCode " + response.statusCode)
     return res
       .status(response.statusCode)
       .json({ message: response.message, data: response.data });
