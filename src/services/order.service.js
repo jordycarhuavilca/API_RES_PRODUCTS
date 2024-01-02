@@ -1,89 +1,68 @@
-const constant = require("../utils/constant");
-const sequelize = require("../db/Connection");
-const { getCurrentTime } = require("../utils/date.utils");
-const axios = require("axios");
-const errorHandler = require('../utils/errorHandler')
-
-
-const setOrder = (document_Identity) => {
-  return {
-    document_Identity: document_Identity,
-    orderTime: getCurrentTime(),
-  };
-};
-
-const addNumOrder = (listProducts, nextOrderid) => {
-  for (let i = 0; i < listProducts.length; i++) {
-    listProducts[i].numOrder = nextOrderid;
-  }
-  return listProducts;
-};
-
-const getTotal = (price, quantity) => {
-  
-  return price * quantity;
-};
-
-const adjustList = (list) => {
-  const newList = [];
-  for (let i = 0; i < list.length; i++) {
-    newList.push({
-      numOrder: list[i].numOrder,
-      quantity: list[i].quantity,
-      total: getTotal(list[i].price, list[i].quantity),
-      product_id: list[i].product_id,
-    });
-  }
-  return newList;
-};
-
-async function addReport(list,document_Identity){
-  const body = {
-    list: list,
-    dni: document_Identity,
-  };
-  await axios.post("http://SERVER_B:3008/reports/add", body)
-  .catch((err)=>{
-    if (err) {
-      const {message,statusCode} = constant.serverError
-      throw new errorHandler.InternalServerError(message,statusCode)
-    }
-  });
-}
-
+const constant = require("../helper/constant");
+const sequelizeConne = require("../db/Connection");
+const { getCurrentTime } = require("../helper/date");
+const errorHandler = require('../helper/errorHandler')
+const orderHelper = require('../helper/order.helper')
+const request = require('../utils/request');
+const validate = require('../helper/validate')
 class orderService {
   constructor(order) {
     this.order = order;
   }
-  async addOrder(listProducts, document_Identity) {
-      const nextOrderid = await this.order.getNextOrderId();
+  async _addOrder(order,t){
+    return await this.order.addOrder(order, t);
+  }
+  async _addOrderDetail(list , t){
+    return await this.order.addOrderDetail(list, t);
+  }
+  async _doReport(list,document_Identity){
+    const body = {
+      list: list,
+      dni: document_Identity,
+    };
+    
+    await request.doRequest('post',"/reports/add",body)
+    .catch((err)=>{
+      if (err ) {
+        const {statusCode} = constant.serverError
+        throw new errorHandler.HttpError("something failed, it couldn't make report",statusCode)
+      }
+    });
+  }
+  async doOrder(listProd, document_Identity) {
+      const nextNumOrder =await this.order.getNextNumOrder()
 
-      let list = addNumOrder(listProducts, nextOrderid);
+      const listWithOrderId = orderHelper.addNextId(validate.copyArray(listProd),nextNumOrder, 'numOrder');
+      const listWithOrderDetailId = orderHelper.addTotal(validate.copyArray(listProd));
 
-      const res = await sequelize.transaction(async (t) => {
+      const orderParams = {
+        numOrder : nextNumOrder,
+        document_Identity: document_Identity,
+        orderTime: getCurrentTime(),
+      }
+
+      const res = await sequelizeConne.transaction(async (t) => {
         try {
 
-          const order = await this.order.addOrder(setOrder(document_Identity), t);
-          list = adjustList(list);
-          const orderDetail = await this.order.addOrderDetail(list, t);
-          order.orderDetail = orderDetail;
-          await addReport(listProducts,document_Identity)
+          const order = await this._addOrder(orderParams,t)
+          const orderDetail =await this._addOrderDetail(listWithOrderDetailId,t);
+          order.setDataValue("orderDetail", orderDetail);
+          await this._doReport(listWithOrderId,document_Identity)
           return order;
 
-        } catch (error) {     
-
-          if (error.name === 'SequelizeUniqueConstraintError'
-           || error.name === 'SequelizeValidationError'
-           || error.name === 'SequelizeForeignKeyConstraintError'
-           ) {
+        } catch (error) {      
+          if (error instanceof errorHandler.ValidateError) {
             const {message,statusCode} = constant.reqValidationError
             throw new errorHandler.ValidateError(message,statusCode)
           } 
-           
+          if (error instanceof errorHandler.HttpError) {
+            throw new errorHandler.HttpError(error.message,error.statusCode)
+          }
           const {message,statusCode} = constant.serverError
-          throw new errorHandler.InternalServerError(message,statusCode)
+          throw new errorHandler.InternalServerError(error.message,statusCode)
         }
-      });
+      })
+
       return res;
   }
 

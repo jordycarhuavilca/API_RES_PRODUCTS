@@ -1,7 +1,7 @@
 const listModels = require("./db/associations");
 const path = require("path");
 const fs = require("fs").promises;
-const { getCurrentTime } = require("./utils/date.utils");
+const { getCurrentTime } = require("./helper/date");
 
 const getCurrentPath = (filename, extention) => {
   return path.join(__dirname, `./data/${filename}.data.${extention}`);

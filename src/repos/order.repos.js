@@ -7,9 +7,13 @@ class orderRespos {
   constructor(order) {
     this.order = order;
   }
-  async getNextOrderId() {
+  async getNextNumOrder() {
     const listOrder =await this.order.findAll();
-    return listOrder.sort((a, b) => b.numOrder - a.numOrder)[0].numOrder +1;
+    if (listOrder.length === 0) {
+      return 1
+    }
+    let rpta = listOrder.sort((a, b) => b.numOrder - a.numOrder)[0].numOrder +1
+    return rpta
   }
   async addOrder(order, trans) {
     return await this.order.create(order,{transaction : trans});
@@ -36,7 +40,6 @@ class orderRespos {
         }
       }
     })
-    console.log("order " +JSON.stringify(order))
     return order
   }
   async getMyPurchases(idcliente) {

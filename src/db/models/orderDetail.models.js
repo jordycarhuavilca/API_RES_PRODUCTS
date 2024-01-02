@@ -6,8 +6,8 @@ const orderDetail = sequelize.define(
   {
     orderDetailId: {
       type: DataTypes.INTEGER,
-      autoIncrement: true,
       primaryKey: true,
+      autoIncrement : true
     },
     quantity: {
       type: DataTypes.INTEGER,

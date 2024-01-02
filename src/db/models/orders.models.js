@@ -6,7 +6,6 @@ const orders = sequelize.define(
   {
     numOrder: {
       type: DataTypes.INTEGER,
-      autoIncrement: true,
       primaryKey: true,
     },
     orderDate: {

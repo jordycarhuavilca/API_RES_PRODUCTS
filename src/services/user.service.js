@@ -1,11 +1,11 @@
-const isEmpty = require("../libs/validate.libs");
-const constant = require("../utils/constant");
+const validate = require("../helper/validate");
+const constant = require("../helper/constant");
 class userService {
   constructor(user) {
     this.user = user;
   }
   async addUser(user) {
-    if (!isEmpty(Object.values(user))) {
+    if (!validate.isEmpty(Object.values(user))) {
       const data = await this.user.addUser(user);
       constant.success.data = data;
       return constant.success;

@@ -2,7 +2,7 @@ class ConnectionError extends Error{
     constructor(msg,statusCode){
         super(msg)
         this.message = msg
-        this.name = 'connectionError'
+        this.name = 'ConnectionError'
         this.statusCode = statusCode
 
     }
@@ -12,7 +12,7 @@ class ValidateError extends Error{
     constructor(msg,statusCode){
         super(msg,statusCode)
         this.message = msg
-        this.name = 'validationError'
+        this.name = 'ValidationError'
         this.statusCode = statusCode
     }
 }
@@ -21,7 +21,7 @@ class NotFoundError extends Error{
     constructor(msg,statusCode){
         super(msg)
         this.message = msg
-        this.name = 'notFoundError'
+        this.name = 'NotFoundError'
         this.statusCode = statusCode
     }
 }
@@ -39,7 +39,16 @@ class TransactionError extends Error{
     constructor(msg,statusCode){
         super(msg)
         this.message = msg
-        this.name = 'transactionError'
+        this.name = 'TransactionError'
+        this.statusCode = statusCode
+    }
+}
+
+class HttpError extends Error{
+    constructor(msg,statusCode){
+        super(msg)
+        this.message = msg
+        this.name = 'HttpError'
         this.statusCode = statusCode
     }
 }
@@ -49,5 +58,6 @@ module.exports = {
     ValidateError,
     NotFoundError,
     InternalServerError,
-    TransactionError
+    TransactionError,
+    HttpError
 }

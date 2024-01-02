@@ -1,25 +1,30 @@
 const { orders } = require("../db/models/orders.models");
 const { orderRespos } = require("../repos/order.repos");
-const { orderService } = require("../services/order.service");
-const constant = require("../utils/constant");
-const errorHandler = require('../utils/errorHandler')
+const {orderService }= require("../services/order.service");
+const constant = require("../helper/constant");
 
 const productRepository = new orderRespos(orders);
 const product_service = new orderService(productRepository);
 
-const addOrder = async (req, res) => {
+const addOrder = async (req,res) => {
+  console.log(req.headers)
   try {
     const listProducts =  req.body
     const {idCliente} =  req.params
-    const {message,statusCode} = constant.reqValidationError
     
-    if (!Array.isArray(listProducts) || listProducts.length == 0)throw new errorHandler.ValidateError("type of data is not an array or it's empty",statusCode)
-    
+    if (!Array.isArray(listProducts) || listProducts.length == 0 || typeof listProducts[0] != "object")
+    return res
+    .status(constant.reqValidationError.statusCode)
+    .json({ message: constant.reqValidationError.message});
+
     listProducts.forEach(({quantity,total,product_id,price})=>{
-      if (!quantity || !total || !product_id || !price) throw new errorHandler.ValidateError(message,statusCode)
+      if (!quantity || !total || !product_id || !price) 
+      return res
+      .status(constant.reqValidationError.statusCode)
+      .json({ message: constant.reqValidationError.message});
     })
 
-    const response = await product_service.addOrder(
+    const response = await product_service.doOrder(
         listProducts,
         idCliente
     );

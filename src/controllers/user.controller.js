@@ -1,7 +1,7 @@
 const { users } = require("../db/models/user.models");
 const { userRepos } = require("../repos/user.repos");
 const { userService } = require("../services/user.service");
-const constant = require("../utils/constant");
+const constant = require("../helper/constant");
 
 const userRepository = new userRepos(users);
 const userServ = new userService(userRepository);
