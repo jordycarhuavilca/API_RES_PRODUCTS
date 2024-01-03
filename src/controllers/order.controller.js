@@ -34,7 +34,7 @@ const addOrder = async (req,res) => {
       .json({ message: constant.reqCreated.message, data: response });
   } catch (err) {
 
-    //si es un errorHandle
+    //si el error es una clase heredada por un Error
     if (err.statusCode) {
       return res.status(err.statusCode).json({ message: err.message ,data: []});
     }
@@ -47,25 +47,32 @@ const getOrdersDetail = async (req,res)=>{
   // res.header('Content-Type', 'application/json');
   // res.header('Access-Control-Allow-Origin', 'http://localhost:3008');
   try {
-    const response = await product_service.getOrdersDetail(
-      req.params.numOrder
+    const numOrder = req.params.numOrder 
+    if (!numOrder) 
+      res.status(constant.reqValidationError.statusCode)
+      .json({ message: constant.reqValidationError.message});
+    
+    const data = await product_service.getOrdersDetail(
+      numOrder
     );
+
     return res
-      .status(response.statusCode)
-      .send({ message: response.message, data: response.data });
+      .status(constant.success.statusCode)
+      .send({ message: constant.success.message, data: data });
+      
   } catch (err) {
-    return res.status(serverError.statusCode).json({ message: err });
+    return res.status(err.statusCode).json({ message: err.message });
   }
 }
 const getMyPurchases = async (req, res) => {
   try {
     const idcliente = req.params.idCliente;
-    const response = await product_service.getMyPurchases(idcliente);
+    const data = await product_service.getMyPurchases(idcliente);
     return res
-      .status(response.statusCode)
-      .send({ message: response.message, data: response.data });
+      .status(constant.success.statusCode)
+      .send({ message: constant.success.message, data: data });
   } catch (err) {
-    return res.status(serverError.statusCode).json({ message: err });
+    return res.status(err.statusCode).json({ message: err.message });
   }
 };
 

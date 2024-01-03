@@ -22,7 +22,7 @@ class orderRespos {
     return await orderDetail.bulkCreate(listProducts,{transaction : trans});
   }
   async getOrdersDetail(numOrder){
-    const order =  await orderDetail.findAll({
+    return await orderDetail.findAll({
       where:{
         numOrder : numOrder 
       },
@@ -40,7 +40,6 @@ class orderRespos {
         }
       }
     })
-    return order
   }
   async getMyPurchases(idcliente) {
     return await this.order.findAll({
@@ -50,14 +49,14 @@ class orderRespos {
       attributes: {
         exclude: ["document_Identity", "numOrder"],
       },
-      include: {
+      include: [{
         model: orderDetail,
         attributes: { exclude: ["numOrder", "product_id","orderDetailId"] },
         include: {
           model: products,
           attributes: { exclude: ["product_id", "stock", "estado"] },
         },
-      },
+      }],
     });
   }
 }

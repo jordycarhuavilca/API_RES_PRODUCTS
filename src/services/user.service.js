@@ -1,34 +1,34 @@
-const validate = require("../helper/validate");
-const constant = require("../helper/constant");
-class userService {
-  constructor(user) {
-    this.user = user;
-  }
-  async addUser(user) {
-    if (!validate.isEmpty(Object.values(user))) {
-      const data = await this.user.addUser(user);
-      constant.success.data = data;
-      return constant.success;
+  const constant = require("../helper/constant");
+  const errorHandler = require('../helper/errorHandler')
+  const handleCommonErr = require('../helper/handleCommonErrors')
+  const sequelize = require('sequelize')
+  class userService {
+    constructor(user) {
+      this.user = user;
     }
-    return constant.reqValidationError;
-  }
-  async listarUsers() {
-    const listUser = await this.user.listarUsers();
-    if (!listUser) {
-      constant.recordNotFound.data = {}
-      return constant.recordNotFound;
+    async addUser(user) {
+        const data = await handleCommonErr.handleErr(this.user.addUser(user),sequelize.Error)
+        return data
     }
-    constant.success.data = listUser;
-    return constant.success;
+    async listarUsers() {
+
+      const listUser = await handleCommonErr.handleErr(this.user.listarUsers(),sequelize.Error)
+
+      if (!listUser) {
+        const {message,statusCode} = constant.recordNotFound
+        throw new errorHandler.NotFoundError(message,statusCode)
+      }
+      return listUser;
+    }
+    async getUser(document_Identity) {
+      const user = await handleCommonErr.handleErr(this.user.getUser(document_Identity),sequelize.Error)
+
+      if (!user){
+        const {message,statusCode} = constant.recordNotFound
+        throw new errorHandler.NotFoundError(message,statusCode)
+      } 
+      return user
+    }
   }
-  async getUser(document_Identity) {
-    const user = await this.user.getUser(document_Identity);
-    if (!user){
-      constant.recordNotFound.data = {}
-      return constant.recordNotFound;
-    } 
-    constant.success.data = user;
-    return constant.success;
-  }
-}
-module.exports = {userService}
+
+  module.exports = {userService}
