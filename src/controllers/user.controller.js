@@ -9,21 +9,17 @@ const userRepository = new userRepos(users);
 const userServ = new userService(userRepository);
 
 const getUser =async (req, res) => {
-  
-  const numDocument = req.params.nrodocument;
-  const {message,statusCode} = constant.reqValidationError
-  
-  if (!numDocument) throw new errorHandler.ValidateError(message,statusCode)
-
   try {
+    const numDocument = req.params.nrodocument;
+    const {message,statusCode} = constant.reqValidationError
+    if (!numDocument) throw new errorHandler.ValidateError(message,statusCode)
   
-    const data =await userServ.getUser(numDocument);
+    const data = await userServ.getUser(numDocument);
     return res
-      .status(constant.reqCreated.statusCode)
-      .json({ message: constant.reqCreated.message, data: data});
+    .status(constant.success.statusCode)
+    .json({ message: constant.success.message, data: data});
 
   } catch (err) {
-    
     return res
     .status(err.statusCode)
     .json({ message: err.message });
@@ -36,8 +32,8 @@ const listarUsers = async (req, res) => {
   try {
     const response = await userServ.listarUsers();
     return res
-      .status(response.statusCode)
-      .json({ message: response.message, data: response.data });
+      .status(constant.success.statusCode)
+      .json({ message: constant.success.message, data: response });
   } catch (err) {
     return res
     .status(err.statusCode)
@@ -56,8 +52,8 @@ const addUser = async (req, res) => {
 
     const response = await userServ.addUser(data);
     return res
-      .status(response.statusCode)
-      .json({ message: response.message, data: response.data });
+    .status(constant.reqCreated.statusCode)
+    .json({ message: constant.reqCreated.message, data: response });
       
   } catch (err) {
     return res

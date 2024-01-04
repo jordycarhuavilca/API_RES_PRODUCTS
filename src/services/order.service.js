@@ -58,8 +58,9 @@ class orderService {
 
   async getOrdersDetail(numOrder) {
     const data = await handleCommonErr.handleErr(this.order.getOrdersDetail(numOrder),sequelize.Error)
-    
-    if (!data) {
+    console.log(JSON.stringify(data))
+
+    if (data.length == 0) {
       const {message,statusCode} = constant.recordNotFound
       throw new errorHandler.NotFoundError(message,statusCode)
     }
@@ -68,8 +69,9 @@ class orderService {
 
   async getMyPurchases(idcliente) {
     const data = await handleCommonErr.handleErr(this.order.getMyPurchases(idcliente),sequelize.Error)
-
-    if (!data) {
+    console.log(JSON.stringify(data))
+   
+    if (data.length == 0) {
       const {message,statusCode} = constant.recordNotFound
       throw new errorHandler.NotFoundError(message,statusCode)
     }

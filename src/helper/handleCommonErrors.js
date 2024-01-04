@@ -24,7 +24,8 @@ class handleCommonErr{
           }
 
           if (this._isErrorConnection(error)) {
-              throw new errorHandler.HttpError(constant.serverError, statusCode);
+            console.log(error.message)
+              throw new errorHandler.HttpError(constant.serverError, constant.serverError.statusCode);
           }
 
           throw new errorHandler.InternalServerError(constant.serverError.message,constant.serverError.statusCode)

@@ -12,22 +12,22 @@
     }
     async listarUsers() {
 
-      const listUser = await handleCommonErr.handleErr(this.user.listarUsers(),sequelize.Error)
+      const data = await handleCommonErr.handleErr(this.user.listarUsers(),sequelize.Error)
 
-      if (!listUser) {
+      if (data.length == 0) {   
         const {message,statusCode} = constant.recordNotFound
         throw new errorHandler.NotFoundError(message,statusCode)
       }
-      return listUser;
+      return data;
     }
     async getUser(document_Identity) {
-      const user = await handleCommonErr.handleErr(this.user.getUser(document_Identity),sequelize.Error)
+      const data = await handleCommonErr.handleErr(this.user.getUser(document_Identity),sequelize.Error)
 
-      if (!user){
+      if (data.length == 0) {
         const {message,statusCode} = constant.recordNotFound
         throw new errorHandler.NotFoundError(message,statusCode)
       } 
-      return user
+      return data
     }
   }
 
