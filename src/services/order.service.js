@@ -1,7 +1,7 @@
 const constant = require("../helper/constant");
 const sequelizeConne = require("../db/Connection");
 const sequelize = require('sequelize')
-const { getCurrentTime } = require("../helper/date");
+const dateHelper = require("../helper/date");
 const errorHandler = require('../helper/errorHandler')
 const orderHelper = require('../helper/order.helper')
 const request = require('../utils/request');
@@ -18,10 +18,12 @@ class orderService {
   async _addOrderDetail(list , t){
     return await this.order.addOrderDetail(list, t);
   }
-  async _doReport(list,document_Identity){
+  async _doReport(list,currentTime,currentDate,document_Identity){
     const data = {
       list: list,
       dni: document_Identity,
+      fecha : currentDate,
+      time: currentTime
     };
     
     await request.doRequest('post',"/reports/add",data)
@@ -39,17 +41,20 @@ class orderService {
       const listWithOrderId = orderHelper.addNextId(validate.copyArray(listProd),nextNumOrder, 'numOrder');
       const listWithOrderDetailId = orderHelper.addTotal(validate.copyArray(listWithOrderId));
 
+      let currentTime =  dateHelper.getCurrentTime()
+      let currentDate = dateHelper.getCurrentDate()
       const orderParams = {
         numOrder : nextNumOrder,
         document_Identity: document_Identity,
-        orderTime: getCurrentTime(),
+        orderTime: currentTime,
+        orderDate : currentDate
       }
 
       const res = await handleCommonErr.handleErr(sequelizeConne.transaction(async (t) => {
           const order = await this._addOrder(orderParams,t)
           const orderDetail =await this._addOrderDetail(listWithOrderDetailId,t)
           order.setDataValue("orderDetail", orderDetail);
-          await this._doReport(listWithOrderId,document_Identity)
+          await this._doReport(listWithOrderId,currentTime,currentDate,document_Identity)
           return order;
       }),sequelize.Error)
 

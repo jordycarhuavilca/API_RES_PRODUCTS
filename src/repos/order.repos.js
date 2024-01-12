@@ -26,7 +26,7 @@ class orderRespos {
       where:{
         numOrder : numOrder 
       },
-      attributes : { exclude : ["orderDetailId","product_id","numOrder"]},
+      attributes : { exclude : ["product_id","numOrder"]},
       include: {
         model : products,
         attributes : { exclude : ["stock","estado"]},

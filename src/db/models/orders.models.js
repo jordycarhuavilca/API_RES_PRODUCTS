@@ -10,7 +10,6 @@ const orders = sequelize.define(
     },
     orderDate: {
       type: DataTypes.DATEONLY,
-      defaultValue : DataTypes.NOW
     },
     orderTime: {
       type: DataTypes.STRING,

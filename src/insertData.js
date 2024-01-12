@@ -1,7 +1,7 @@
 const listModels = require("./db/associations");
 const path = require("path");
 const fs = require("fs").promises;
-const { getCurrentTime } = require("./helper/date");
+const dateHelper = require("./helper/date");
 
 const getCurrentPath = (filename, extention) => {
   return path.join(__dirname, `./data/${filename}.data.${extention}`);
@@ -13,7 +13,8 @@ const insertData = async (pathWay, model, nameModel) => {
     if (nameModel == "orders") {
       const list = JSON.parse(dataString);
       list.forEach((data) => {
-        data.orderTime = getCurrentTime();
+        data.orderTime = dateHelper.getCurrentTime();
+        data.orderDate = dateHelper.getCurrentDate();
       });
       dataString = JSON.stringify(list);
     }

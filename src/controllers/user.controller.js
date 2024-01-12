@@ -44,10 +44,11 @@ const listarUsers = async (req, res) => {
 const addUser = async (req, res) => {
   try {
     const data = req.body;
-    if(!data) res.status(constant.reqValidationError.statusCode)
+  
+    if(!data || isNaN(data.document_Identity)) return res.status(constant.reqValidationError.statusCode)
     .json({ message: constant.reqValidationError.message});
 
-    if(validate.isEmpty(Object.values(data))) res.status(constant.reqValidationError.statusCode)
+    if(validate.isEmpty(Object.values(data))) return res.status(constant.reqValidationError.statusCode)
     .json({ message: constant.reqValidationError.message});
 
     const response = await userServ.addUser(data);

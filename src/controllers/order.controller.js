@@ -1,6 +1,7 @@
 const { orders } = require("../db/models/orders.models");
 const { orderRespos } = require("../repos/order.repos");
 const {orderService }= require("../services/order.service");
+const orderHelper = require('../helper/order.helper')
 const constant = require("../helper/constant");
 
 const productRepository = new orderRespos(orders);
@@ -11,7 +12,12 @@ const addOrder = async (req,res) => {
   try {
     const listProducts =  req.body
     const {idCliente} =  req.params
-    
+  
+
+    if (orderHelper.isOkayTotal(listProducts)) return res
+    .status(constant.reqValidationError.statusCode)
+    .json({ message: "total doesn't match with result of price and quantity"});
+
     if (!Array.isArray(listProducts) || listProducts.length == 0 || typeof listProducts[0] != "object")
     return res
     .status(constant.reqValidationError.statusCode)
